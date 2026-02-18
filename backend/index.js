@@ -4,9 +4,9 @@
 
 const apidata=require('./apicalling');
 
-
 const http = require('http');
-const PORT=4004; 
+const dataWrite = require('./usefsmodule');
+const PORT=4005; 
 
 const server=http.createServer(async(req,res)=>{
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -37,7 +37,11 @@ const server=http.createServer(async(req,res)=>{
         res.end(JSON.stringify({msg:jsondata}));
     }
 
-
+    else if(req.url=="/datawrite" && req.method=="GET"){
+        res.setHeader("Content-type",'application/json');
+        const jsondata =dataWrite();
+        res.end(JSON.stringify({msg:jsondata}));
+    }
 
     else{
         res.setHeader('Content-type','text/html');
@@ -48,5 +52,3 @@ const server=http.createServer(async(req,res)=>{
 server.listen(PORT,()=>{
     console.log(`Server is running on port ${PORT}`);
 });
-
-
